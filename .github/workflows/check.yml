@@ -1,1 +1,24 @@
+name: deno check
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
 
+jobs:
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: Kesin11/actions-timeline@v2
+      - name: Clone repository
+        uses: actions/checkout@v4
+      - name: Install Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v2.x
+      - name: Check step
+        run: deno task check
