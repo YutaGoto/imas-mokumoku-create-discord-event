@@ -54,11 +54,5 @@ Deno.cron("DiscordEventBot", "0 2 2 * *", async () => {
 });
 
 Deno.serve({ port: 4242 }, async (_req) => {
-  await createEvent();
-
   return new Response("Hello World");
 });
-
-// if (import.meta.main) {
-//   createEvent();
-// }
