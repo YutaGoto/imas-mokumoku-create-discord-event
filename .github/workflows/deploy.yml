@@ -27,6 +27,6 @@ jobs:
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: imas-mokumoku-create-discord-event
+          project: imas-moku-discord-event
           entrypoint: main.ts
           root: .
