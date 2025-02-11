@@ -1,7 +1,7 @@
 import "jsr:@std/dotenv/load";
 
 const getThirdThursdayDay = (date = new Date()): number => {
-  return 7 * 2 + 4 - new Date(date.getFullYear(), date.getMonth(), 1).getDay() + 1;
+  return 7 * 3 + 4 - new Date(date.getFullYear(), date.getMonth(), 1).getDay() + 1;
 };
 
 const createEvent = async () => {
@@ -10,23 +10,23 @@ const createEvent = async () => {
 
   const scheduled_start_time = new Date();
   scheduled_start_time.setDate(thirdThursday);
-  scheduled_start_time.setHours(20);
+  scheduled_start_time.setHours(11); // UTC 11時 日本時間 20時
   scheduled_start_time.setMinutes(0);
   scheduled_start_time.setSeconds(0);
   scheduled_start_time.setMilliseconds(0);
 
   const scheduled_end_time = new Date(scheduled_start_time);
-  scheduled_end_time.setHours(22);
+  scheduled_end_time.setHours(13); // UTC 13時 日本時間 22時
 
   const body = {
-    name: "アイマスもくもく会テストイベント",
+    name: "アイマスもくもく会",
     privacy_level: 2,
     scheduled_start_time: scheduled_start_time.toISOString(),
     scheduled_end_time: scheduled_end_time.toISOString(),
     entity_metadata: {
       location: "",
     },
-    description: "アイマスもくもく会テストイベント",
+    description: "アイマスもくもく会",
     entity_type: 3,
   };
 
