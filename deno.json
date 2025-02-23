@@ -6,7 +6,8 @@
     "format": "deno fmt"
   },
   "imports": {
-    "@std/assert": "jsr:@std/assert@1"
+    "@std/assert": "jsr:@std/assert@1",
+    "sparql-http-client": "npm:sparql-http-client@^3.0.1"
   },
   "lint": {
     "include": ["**/*.ts"],

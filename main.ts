@@ -1,4 +1,48 @@
 import "jsr:@std/dotenv/load";
+import SparqlClient from "npm:sparql-http-client";
+
+type SparqlRow = {
+  birthDate: {
+    value: string;
+  };
+  name: {
+    value: string;
+  };
+};
+
+const getBirthdayIdol = async (birthDate: string): Promise<string> => {
+  const client = new SparqlClient({ endpointUrl: "https://sparql.crssnky.xyz/spql/imas/query" });
+
+  const query = `
+  PREFIX imas: <https://sparql.crssnky.xyz/imasrdf/URIs/imas-schema.ttl#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      PREFIX schema: <http://schema.org/>
+
+      SELECT DISTINCT ?birthDate ?name
+      WHERE {
+        ?s rdfs:label ?name;
+          rdf:type ?type;
+          imas:nameKana|imas:alternateNameKana ?kana;
+          schema:birthDate ?birthDate .
+          FILTER (regex(str(?type), 'Idol$|Staff$')).
+          FILTER (str(?birthDate) = '--${birthDate}')
+      }
+      ORDER BY ?birthDate
+  `;
+
+  const stream = client.query.select(query);
+  const data: SparqlRow[] = [];
+
+  await new Promise((resolve, _reject) => {
+    stream.on("data", (row: SparqlRow) => {
+      data.push(row);
+      resolve(data);
+    });
+  });
+
+  return data.map((row) => row.name.value).join(", ");
+};
 
 const getThirdThursdayDay = (date = new Date()): number => {
   return 7 * 3 + 4 - new Date(date.getFullYear(), date.getMonth(), 1).getDay() + 1;
@@ -18,13 +62,17 @@ const createEvent = async () => {
   const scheduled_end_time = new Date(scheduled_start_time);
   scheduled_end_time.setHours(13); // UTC 13時 日本時間 22時
 
+  const birthdayIdols = await getBirthdayIdol(
+    `${(scheduled_start_time.getMonth() + 1).toString().padStart(2, "0")}-${thirdThursday.toString().padStart(2, "0")}`,
+  );
+
   const body = {
     name: "アイマスもくもく会",
     privacy_level: 2,
     scheduled_start_time: scheduled_start_time.toISOString(),
     scheduled_end_time: scheduled_end_time.toISOString(),
     entity_metadata: {
-      location: "",
+      location: `https://imastudy-mokumoku.connpass.com/ | 誕生日アイドル: ${birthdayIdols}`,
     },
     description: "アイマスもくもく会",
     entity_type: 3,
@@ -53,6 +101,9 @@ Deno.cron("DiscordEventBot", "0 2 2 * *", async () => {
   await createEvent();
 });
 
-Deno.serve({ port: 4242 }, (_req) => {
-  return new Response("Hello World");
+Deno.serve({ port: 4242 }, async (_req) => {
+  const birthdayIdols = await getBirthdayIdol(
+    `${(new Date().getMonth() + 1).toString().padStart(2, "0")}-${getThirdThursdayDay().toString().padStart(2, "0")}`,
+  );
+  return new Response(birthdayIdols);
 });
