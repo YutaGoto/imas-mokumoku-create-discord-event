@@ -34,10 +34,13 @@ const getBirthdayIdol = async (birthDate: string): Promise<string> => {
   const stream = client.query.select(query);
   const data: SparqlRow[] = [];
 
-  await new Promise((resolve, _reject) => {
+  await new Promise((resolve, reject) => {
     stream.on("data", (row: SparqlRow) => {
       data.push(row);
       resolve(data);
+    });
+    stream.on("error", (error: Error) => {
+      reject(error);
     });
   });
 
