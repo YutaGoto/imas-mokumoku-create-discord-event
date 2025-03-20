@@ -1,5 +1,4 @@
 import "jsr:@std/dotenv/load";
-import SparqlClient from "npm:sparql-http-client";
 
 type SparqlRow = {
   birthDate: {
@@ -11,7 +10,7 @@ type SparqlRow = {
 };
 
 const getBirthdayIdol = async (birthDate: string): Promise<string> => {
-  const client = new SparqlClient({ endpointUrl: "https://sparql.crssnky.xyz/spql/imas/query" });
+  const endpointUrl = "https://sparql.crssnky.xyz/spql/imas/query";
 
   const query = `
   PREFIX imas: <https://sparql.crssnky.xyz/imasrdf/URIs/imas-schema.ttl#>
@@ -31,17 +30,19 @@ const getBirthdayIdol = async (birthDate: string): Promise<string> => {
       ORDER BY ?birthDate
   `;
 
-  const stream = client.query.select(query);
-  const data: SparqlRow[] = [];
+  const response = await fetch(`${endpointUrl}?output=json&query=${encodeURIComponent(query)}`);
 
-  await new Promise((resolve, _reject) => {
-    stream.on("data", (row: SparqlRow) => {
-      data.push(row);
-      resolve(data);
-    });
-  });
+  if (!response.ok) {
+    return "";
+  }
 
-  return data.map((row) => row.name.value).join(", ");
+  const result = await response.json();
+
+  if (result.results.bindings.length === 0) {
+    return "";
+  }
+
+  return `| 誕生日アイドル: ${result.results.bindings.map((row: SparqlRow) => row.name.value).join(", ")}`;
 };
 
 const getThirdThursdayDay = (date = new Date()): number => {
@@ -72,7 +73,7 @@ const createEvent = async () => {
     scheduled_start_time: scheduled_start_time.toISOString(),
     scheduled_end_time: scheduled_end_time.toISOString(),
     entity_metadata: {
-      location: `https://imastudy-mokumoku.connpass.com/ | 誕生日アイドル: ${birthdayIdols}`,
+      location: `https://imastudy-mokumoku.connpass.com/ ${birthdayIdols}`,
     },
     description: "アイマスもくもく会",
     entity_type: 3,
