@@ -46,7 +46,24 @@ const getBirthdayIdol = async (birthDate: string): Promise<string> => {
 };
 
 const getThirdThursdayDay = (date = new Date()): number => {
-  return 7 * 3 + 4 - new Date(date.getFullYear(), date.getMonth(), 1).getDay() + 1;
+  // その月の1日の曜日を取得（0=日曜日, 1=月曜日, ..., 4=木曜日, ..., 6=土曜日）
+  const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+
+  // 木曜日は4（0=日曜日から数えて4番目）
+  const thursday = 4;
+
+  // その月の最初の木曜日までの日数を計算
+  let daysToFirstThursday;
+  if (firstDayOfMonth <= thursday) {
+    // 1日が木曜日以前の場合
+    daysToFirstThursday = thursday - firstDayOfMonth;
+  } else {
+    // 1日が木曜日より後の場合（金曜日以降）
+    daysToFirstThursday = 7 - firstDayOfMonth + thursday;
+  }
+
+  // 第三木曜日 = 最初の木曜日 + 14日（2週間後）
+  return 1 + daysToFirstThursday + 14;
 };
 
 const createEvent = async () => {
