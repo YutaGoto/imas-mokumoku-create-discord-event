@@ -33,7 +33,7 @@ const getBirthdayIdol = async (birthDate: string): Promise<string> => {
   const response = await fetch(`${endpointUrl}?output=json&query=${encodeURIComponent(query)}`);
 
   if (!response.ok) {
-    return "";
+    return "error";
   }
 
   const result = await response.json();
@@ -103,8 +103,13 @@ Deno.cron("DiscordEventBot", "0 2 2 * *", async () => {
 });
 
 Deno.serve({ port: 4242 }, async (_req) => {
+  console.log("アイドル取得");
+
+  const thirdThursday = getThirdThursdayDay();
+
   const birthdayIdols = await getBirthdayIdol(
-    `${(new Date().getMonth() + 1).toString().padStart(2, "0")}-${getThirdThursdayDay().toString().padStart(2, "0")}`,
+    `${(new Date().getMonth() + 1).toString().padStart(2, "0")}-${thirdThursday.toString().padStart(2, "0")}`,
   );
+
   return new Response(birthdayIdols);
 });
