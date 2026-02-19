@@ -42,7 +42,7 @@ const getBirthdayIdol = async (birthDate: string): Promise<string> => {
     return "";
   }
 
-  return `| 誕生日アイドル: ${result.results.bindings.map((row: SparqlRow) => row.name.value).join(", ")}`;
+  return `誕生日アイドル: ${result.results.bindings.map((row: SparqlRow) => row.name.value).join(", ")}`;
 };
 
 const getThirdThursdayDay = (date = new Date()): number => {
@@ -90,9 +90,9 @@ const createEvent = async () => {
     scheduled_start_time: scheduled_start_time.toISOString(),
     scheduled_end_time: scheduled_end_time.toISOString(),
     entity_metadata: {
-      location: `https://imastudy-mokumoku.connpass.com/ ${birthdayIdols}`,
+      location: "https://imastudy-mokumoku.connpass.com/",
     },
-    description: "アイマスもくもく会",
+    description: `アイマスもくもく会 | ${birthdayIdols}`,
     entity_type: 3,
   };
 
