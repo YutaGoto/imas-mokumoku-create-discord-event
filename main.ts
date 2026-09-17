@@ -1,4 +1,5 @@
 import "@std/dotenv/load";
+import { verifyKey } from "discord-interactions";
 
 type SparqlRow = {
   birthDate: {
@@ -112,14 +113,7 @@ const createEvent = async () => {
   console.log(await resp.json());
 };
 
-// 毎月2日の11時にイベントを作成する (JST 11時) (UTC 2時)
-Deno.cron("DiscordEventBot", "0 2 2 * *", async () => {
-  console.log("イベント作成");
-
-  await createEvent();
-});
-
-Deno.serve({ port: 4242 }, async (_req) => {
+const getRoot = async () => {
   console.log("アイドル取得");
 
   const thirdThursday = getThirdThursdayDay();
@@ -129,4 +123,84 @@ Deno.serve({ port: 4242 }, async (_req) => {
   );
 
   return new Response(birthdayIdols);
+};
+
+// 毎月2日の11時にイベントを作成する (JST 11時) (UTC 2時)
+Deno.cron("DiscordEventBot", "0 2 2 * *", async () => {
+  console.log("イベント作成");
+
+  await createEvent();
+});
+
+Deno.serve({ port: 4242 }, async (req) => {
+  const url = new URL(req.url);
+  if (req.method === "GET" && url.pathname === "/") {
+    return await getRoot();
+  }
+
+  if (req.method === "GET") {
+    return new Response("Not Found", { status: 404 });
+  }
+
+  if (url.pathname !== "/") {
+    return new Response("Not Found", { status: 404 });
+  }
+
+  const signature = req.headers.get("X-Signature-Ed25519");
+  const timestamp = req.headers.get("X-Signature-Timestamp");
+  if (!signature) {
+    return new Response("X-Signature-Ed25519 header is missing", { status: 401 });
+  }
+  if (!timestamp) {
+    return new Response("X-Signature-Timestamp header is missing", { status: 401 });
+  }
+
+  const body = await req.arrayBuffer();
+  const discordType = JSON.parse(new TextDecoder().decode(body)).type;
+
+  const publicKey = Deno.env.get("BOT_PUBLIC_KEY");
+  if (!publicKey) {
+    return new Response("BOT_PUBLIC_KEY is not set", { status: 500 });
+  }
+
+  const vefified = await verifyKey(body, signature, timestamp, publicKey);
+  if (!vefified) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  const thirdThursday = getThirdThursdayDay();
+
+  const birthdayIdols = await getBirthdayIdol(
+    `${(new Date().getMonth() + 1).toString().padStart(2, "0")}-${thirdThursday.toString().padStart(2, "0")}`,
+  );
+
+  if (discordType === 1) {
+    return new Response(
+      JSON.stringify({
+        type: 1,
+      }),
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+  } else {
+    return new Response(
+      JSON.stringify({
+        type: 4,
+        data: {
+          tts: false,
+          content: birthdayIdols,
+        },
+      }),
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+  }
 });
