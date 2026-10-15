@@ -4,7 +4,9 @@
     "jsr:@std/assert@1": "1.0.11",
     "jsr:@std/dotenv@*": "0.225.2",
     "jsr:@std/dotenv@~0.225.2": "0.225.2",
-    "jsr:@std/internal@^1.0.5": "1.0.5"
+    "jsr:@std/internal@^1.0.5": "1.0.5",
+    "npm:discord-interactions@*": "4.4.0",
+    "npm:discord-interactions@^4.4.0": "4.4.0"
   },
   "jsr": {
     "@std/assert@1.0.11": {
@@ -20,10 +22,60 @@
       "integrity": "54a546004f769c1ac9e025abd15a76b6671ddc9687e2313b67376125650dc7ba"
     }
   },
+  "npm": {
+    "discord-interactions@4.4.0": {
+      "integrity": "sha512-jjJx8iwAeJcj8oEauV43fue9lNqkf38fy60aSs2+G8D1nJmDxUIrk08o3h0F3wgwuBWWJUZO+X/VgfXsxpCiJA=="
+    }
+  },
+  "redirects": {
+    "https://deno.land/x/discord_api_types/v10.ts": "https://deno.land/x/discord_api_types@0.38.50/v10.ts"
+  },
+  "remote": {
+    "https://deno.land/std@0.192.0/encoding/hex.ts": "b4b1a7cb678745b0bf181ed8cf2498c7be00d121a7de244b752fbf9c7d9c48cd",
+    "https://deno.land/x/discord_api_types@0.38.50/gateway/v10.ts": "74fadcd69d01c4e3ee80c49cebc31aa839aa61e160ab63040045ab1df35674d9",
+    "https://deno.land/x/discord_api_types@0.38.50/globals.ts": "6b16c5cc1656a1bf7afd1083de72d6e6f2ef9666f5a9fd3569842964a7ff1918",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/common.ts": "de39b7f4e5b004c96de1de38b8e4e3b3b70fe70ad1fd417c08cae6f14edbbf52",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/_interactions/_applicationCommands/_chatInput/shared.ts": "b56e7afacb6768ac0df7d9fd4ba711a0748f00302fb1524a9d278f3a0df22a0a",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/_interactions/_applicationCommands/chatInput.ts": "cb76651331a41ee61990d68b66f6da8aa7a49dbd311dbfe4ec6bd0ff63baa783",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/_interactions/_applicationCommands/permissions.ts": "38bf9fb58e09166b28420cba1b717fa13bd1809ecd34037b28fa08b3c53b1b03",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/_interactions/applicationCommands.ts": "ce3f37eabcc6e46ba6e72a6ead9c9bc04564dd2227134002725780e8bafb6331",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/_interactions/responses.ts": "160edd1932dc640bde992758d35e94bdae3d3c9a2ad43191316d081b2f4606a2",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/application.ts": "697a49ca481f7104d1184289333bcdef30fe3c936caf6d4a49d1e5dd645e02e9",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/auditLog.ts": "a06f2be75dd3429ebb89c7c553e9ec84692af2ad725d5539cf85c79950601160",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/autoModeration.ts": "a953a2d8d99a2f37e130171b034935e8ebf1c16c8afed3091ba34b849e70c1b1",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/channel.ts": "1ac5605d7190771a32e08f1183e1b1e6fef67660d9f8ad029078d4869ff0ee3a",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/gateway.ts": "41039166f6a3668ab16911ef66d97ed59229a6b844787736f552ceac0479db9a",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/guild.ts": "b0e697d8fad7a722284db501405e92d66ab1270b69cd903e393e902b3fbe6c1f",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/guildScheduledEvent.ts": "bf345b0383719349c144d3d146e1a94ffd4687c6d04b6ee6820e157bb729addd",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/interactions.ts": "8c4124d3a5aa423e8800182bff1771e244194926a44220911f1f8bb5d0dc99e7",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/invite.ts": "0f8db1d1abec3bd8f75a820b2ac65578816df6ed0dd7cc79f7e21dbca18a9f66",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/message.ts": "a6093e02abaec9ba0a8d6b44847b8ef7c5d3558cbac92281b9de139fd44aaf7e",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/mod.ts": "62ead87643655f064e236b1e4e3f1e4eb4d8df54b34511623ce2760164bea1ce",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/monetization.ts": "9bfadff66caca4dc5490b578ca2067a4f08dd5e0e8268b769a7ba67cba4a6120",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/oauth2.ts": "a8323c59d4838934c2dca1f0673ad07e376765cb23e4b732dff9af8c82165215",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/permissions.ts": "d8e6e299dd9a89e5f1dc9046c870858443ad6d090761c0d1dcab609705ab71a8",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/poll.ts": "fd6170fb5c6f2a8cac50cf23488752501a75c610b5ef6320fbfe918ab7396b21",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/stageInstance.ts": "5c767113d982930715885bf963afe92ee4f52c20ec0f798977114c67263e7d08",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/sticker.ts": "6ed3cced3d03c41e68c8f008aed5b03e21e6b0ad1e685e147e06260a98b7b6ed",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/teams.ts": "e5198be6f84bb11c5b188092cfa6da797b0052531b3dc05c6c1b87fa1cab4bb5",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/user.ts": "f7d0eb19484a6b07e4957eff7bea32e5070d96eff2f60eaebbb3b39cea40ae10",
+    "https://deno.land/x/discord_api_types@0.38.50/payloads/v10/webhook.ts": "03ea9a1e4cfba1fff85a9678e6e1758e9fe04fc231cb2c97442438d8839417d8",
+    "https://deno.land/x/discord_api_types@0.38.50/rest/common.ts": "f8a3dd2f1f6da266a8c3d16acdb1a4daffbf2cc993ee1a361d34cbef12a48191",
+    "https://deno.land/x/discord_api_types@0.38.50/rest/v10/channel.ts": "27782a327b2f84073ed07bf49aea5c765260e32349e6fa76f5c269985b04f28d",
+    "https://deno.land/x/discord_api_types@0.38.50/rest/v10/invite.ts": "b534bd99da28d1de21a8e5ef92c870f83e326e007e01c00afba2cc3bb0a2c4b9",
+    "https://deno.land/x/discord_api_types@0.38.50/rest/v10/mod.ts": "137b2ed11907bd40fe749665c1ec2867660eb9bca91c1c4e0545e5a55769cbeb",
+    "https://deno.land/x/discord_api_types@0.38.50/rest/v10/monetization.ts": "ddcc5de160b4c95a5469739d66f50b2067a63c3c429ff7ca72114b0d852095bd",
+    "https://deno.land/x/discord_api_types@0.38.50/rpc/common.ts": "78a1b9d9b172e4a4b9c6ac92d7c7886f6d4dd8a4d7649e9b7d7a000dd24fdc06",
+    "https://deno.land/x/discord_api_types@0.38.50/rpc/v10.ts": "0dbb12c1b3d071925c4a8731af2b6d891c636a766a915d65bc8f3117f0a9c94e",
+    "https://deno.land/x/discord_api_types@0.38.50/utils/internals.ts": "2349a63cabdf0b4829f62a25d3ab76486969979909466974fb9d68f32074f3f1",
+    "https://deno.land/x/discord_api_types@0.38.50/utils/v10.ts": "fd51a8b7181efa8dc1e79aac99caf863ca233fbd609374de9562610205c760a9",
+    "https://deno.land/x/discord_api_types@0.38.50/v10.ts": "f08e6572cc626b7713e9b46f87568dcbc64477f3b487afff2864688a9ef31c4a"
+  },
   "workspace": {
     "dependencies": [
       "jsr:@std/assert@1",
-      "jsr:@std/dotenv@~0.225.2"
+      "jsr:@std/dotenv@~0.225.2",
+      "npm:discord-interactions@^4.4.0"
     ]
   }
 }
