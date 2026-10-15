@@ -28,7 +28,9 @@
     ]
   },
   "deploy": {
-    "entrypoint": "main.ts",
-    "root": "."
+    "runtime": {
+      "type": "dynamic",
+      "entrypoint": "main.ts"
+    }
   }
 }
