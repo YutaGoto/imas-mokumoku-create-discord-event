@@ -34,7 +34,7 @@ const getBirthdayIdol = async (birthDate: string): Promise<string> => {
   const response = await fetch(`${endpointUrl}?output=json&query=${encodeURIComponent(query)}`);
 
   if (!response.ok) {
-    return "error";
+    return "誕生日アイドルの情報を取得に失敗しました。";
   }
 
   const result = await response.json();
@@ -132,6 +132,7 @@ Deno.cron("DiscordEventBot", "0 2 2 * *", async () => {
   await createEvent();
 });
 
+// Discordのインタラクションを受け付ける
 Deno.serve({ port: 4242 }, async (req) => {
   const url = new URL(req.url);
   if (req.method === "GET" && url.pathname === "/") {
